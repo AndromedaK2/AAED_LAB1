@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 
 int columnas = 0;
@@ -112,15 +113,20 @@ void llenarBeneficiosPesos(FILE * mochila){
 
 int main()
 {
+    clock_t t;
+    double time_taken;
     FILE * mochila; 
     pedirArchivo(&mochila);
     pedirPesoMaximo();
     contarLineas(mochila);   
     llenarBeneficiosPesos(mochila);
 
-    int soluciones[columnas];   
+    int soluciones[columnas];
+    t = clock();   
     generarSoluciones(soluciones, columnas, 0);
-
+    t = clock()-t;
+    time_taken = ((double)t)/CLOCKS_PER_SEC;
+    printf("tiempo: %f segundos \n",time_taken);
     printf("peso:%d \n",totalPesoFinal);
     printf("beneficio:%d \n",totalBeneficioFinal);
 
